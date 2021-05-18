@@ -7,7 +7,7 @@ html,body {
     padding-top: 1em;
     text-align: center;
     background-color: black;
-    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1/img/background-2.png");
+    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/background-2.png");
     background-size: cover;
     background-repeat: space;
   }
@@ -19,7 +19,7 @@ html,body {
   }
   
   canvas {
-    background-image: url('/Users/admin/Desktop/general-assembly/unit-1/Project-1/img/Wood02.png'); 
+    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/Wood02.png"); 
     background-repeat: repeat; 
     background-color: #222;
     width: 100%;
@@ -45,7 +45,7 @@ html,body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('/Users/admin/Desktop/general-assembly/unit-1/Project-1/img/top=-background.png')
+    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/top=-background.png")
   }
   
   #top-left {

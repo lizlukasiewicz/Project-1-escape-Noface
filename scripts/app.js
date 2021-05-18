@@ -6,21 +6,11 @@ const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 //**let collision = false**
 
-// Fill Color
-ctx.fillStyle = 'white';
-// Line Color
-ctx.strokeStyle = 'red';
-// Line width
-ctx.lineWidth = 5;
-
-
-ctx.fillRect(10, 10, 100, 100);
-ctx.strokeRect(10, 10, 100, 100);
+//ctx.fillRect(10, 10, 100, 100);
+//ctx.strokeRect(10, 10, 100, 100);
 
 canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
- 
-  
 //   const ctx = canvas.getContext('2d')
 
   class Crawler{
@@ -30,8 +20,6 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
         this.color = color
         this.width = width
         this.height = height
-        // this.gravity = 0.001
-        // this.gravitySpeed = 0                        <<-- possible gravity variable
         //this.alive = true
       }
       render() {
@@ -39,16 +27,11 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
         ctx.fillRect(this.x, this.y, this.width, this.height)
       }
   }
-//   this.newPos = function() {                  
-//     this.gravitySpeed += this.gravity;           <<--possible gravity function
-//     this.x += this.speedX + this.gravitySpeed;
-//     this.y += this.speedY;        
-// }
 
-  let obstacle = new Crawler(40, 120, 'red', 40, 40);
-  let hero = new Crawler(490, 190, 'hotpink', 40, 35);
+  let obstacle //= [ ]
+  let hero = new Crawler(250, 190, 'hotpink', 40, 35);
   let ogre = new Crawler(680, 50, '#BADA55', 100, 300);
-  
+
   var Keys = {
       up: false,
       down: false,
@@ -56,20 +39,20 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
       right: false,
   }
 
-  window.onkeydown = function(e) {                      //  \
+  window.onkeydown = function(e) {
       var kc = e.keyCode
       if(kc === 37 || kc === 65) Keys.left = true;
-      if(kc === 38 || kc === 87) Keys.up = true;//            \
+      if(kc === 38 || kc === 87) Keys.up = true;
       if(kc === 39 || kc === 68) Keys.right = true;
-      if(kc === 40 || kc === 83) Keys.down = true; //            \
+      if(kc === 40 || kc === 83) Keys.down = true;
   }
-//                                                              Movement funtion
+
   window.onkeyup = function(e) {
       var kc = e.keyCode
-      if(kc === 37 || kc === 65) Keys.left = false;//                   /
+      if(kc === 37 || kc === 65) Keys.left = false;
       if(kc === 38 || kc === 87) Keys.up = false;
       if(kc === 39 || kc === 68) Keys.right = false;
-      if(kc === 40 || kc === 83) Keys.down = false;             //  /
+      if(kc === 40 || kc === 83) Keys.down = false;
   }
 
       function move() {
@@ -84,15 +67,33 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
           hero.x += speed
         }
      }
+  function createRandomObstacle () {
+    const randomY = Math.floor(Math.random()*360)     //console.log(randomY)
+    //Math.random() * (max - min) + min;
+    //const randomX = Math.floor(Math.random() * (1500 - 1000) + 1000);
+    //console.log(randomX)
+   // for(i = 0; i < obstacle.length; i += 1) {
+     return new Crawler(0, randomY, 'red', 40, 40);
+   // }
+   //  if(obstacle.length < 4){
+   //   obstacle.push(new obstacle(0, randomY, 'red', 40, 40))
+   //  }
+    }
 
   function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)                //clears the canvas
     move()
     movementDisplay.textContent = `X: ${hero.x} Y: ${hero.y}`       //Display the X and Y coordinates of our hero
-    detectHit()
     ogre.render()
+    if(!obstacle){ //!obstacle
+      obstacle = createRandomObstacle()
+    }
+    obstacle.x += 15
+    if(obstacle.x >= 600) {
+      obstacle = createRandomObstacle()
+    }
     obstacle.render()
-   // obstacle.newPos()
+    detectHit()
     hero.render()
   //  hero.newPos()
 }
@@ -116,31 +117,10 @@ function movementHandler(e) {
         hero.x += 10
     
     } 
-    //gravity for obstacle
-
   }
   
 
-function detectHit() {
-    // check each side for intersection one by one
-    // let ogreLeft = hero.x + hero.width >= ogre.x
-    // let ogreRight = hero.x <= ogre.x + ogre.width
-    // console.log('ogreRight', ogreRight)
-    // console.log('ogreLeft', ogreLeft)
-  // if collision === false {hero.y -= 10}
-    /* 
-    checking both sides with an or will always be true!
-    // (hero.x <= ogre.x + ogre.width || hero.x + hero.width >= ogre.x)
-    hits are only detected only when BOTH are ture!
-    // (hero.x <= ogre.x + ogre.width && hero.x + hero.width >= ogre.x)
-    */
-  
-    // check the top annd bottom 
-    // let ogreTop = hero.y + hero.height >= ogre.y
-    // console.log('ogreTop', ogreTop)
-    // let ogreBottom = hero.y <= ogre.y + ogre.height
-    // console.log('ogreBottom', ogreBottom)
-  
+function detectHit() {  
     // one big, confusing if:
     if (                                  //noface
       hero.x + hero.width >= ogre.x &&
@@ -160,9 +140,16 @@ function detectHit() {
         hero.y + hero.height >= obstacle.y
         ) {
           hero.y += 5
-          hero.x += 5
+          hero.x += 10
      }
-  }
-    //  function createRandomObstacle () {
-    //      const randomY = Math.floor(Math.random()*)
+    //  if (hero.x >= 100) {
+    //    hero.x += 6
+    //  } else if(hero.x >= 200) {    <--- gravity for hero
+    //    hero.x += 10
+    //  } else if(hero.x >= 300) {
+    //    hero.x += 15
+    //  } else if(hero.x >= 400) {
+    //    hero.x += 18
     //  }
+  }
+
