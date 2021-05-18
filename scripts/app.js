@@ -28,9 +28,11 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
       }
   }
 
-  let obstacle //= [ ]
   let hero = new Crawler(250, 190, 'hotpink', 40, 35);
   let ogre = new Crawler(680, 50, '#BADA55', 100, 300);
+  let obstacle //= [ ]
+  let obstacleTwo
+  let obstacleThree
 
   var Keys = {
       up: false,
@@ -68,17 +70,19 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
         }
      }
   function createRandomObstacle () {
-    const randomY = Math.floor(Math.random()*360)     //console.log(randomY)
+    const randomY = Math.floor(Math.random()*360) + 1
+    const randomHeight = Math.floor(Math.random() * 40) + 40     //console.log(randomY)
     //Math.random() * (max - min) + min;
     //const randomX = Math.floor(Math.random() * (1500 - 1000) + 1000);
     //console.log(randomX)
    // for(i = 0; i < obstacle.length; i += 1) {
-     return new Crawler(0, randomY, 'red', 40, 40);
+     return new Crawler(0, randomY, 'red', 40, randomHeight);
    // }
    //  if(obstacle.length < 4){
    //   obstacle.push(new obstacle(0, randomY, 'red', 40, 40))
    //  }
     }
+ 
 
   function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)                //clears the canvas
@@ -88,14 +92,30 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
     if(!obstacle){ //!obstacle
       obstacle = createRandomObstacle()
     }
-    obstacle.x += 15
-    if(obstacle.x >= 600) {
+    obstacle.x += 14
+    if(obstacle.x >= 650) {
       obstacle = createRandomObstacle()
     }
+    if(!obstacleTwo){ //!obstacle
+      obstacleTwo = createRandomObstacle()
+    }
+    obstacleTwo.x += 12
+    if(obstacleTwo.x >= 640) {
+      obstacleTwo = createRandomObstacle()
+    }
+    if(!obstacleThree){ //!obstacle
+      obstacleThree = createRandomObstacle()
+    }
+    obstacleThree.x += 16
+    if(obstacleThree.x >= 630) {
+      obstacleThree = createRandomObstacle()
+    }
     obstacle.render()
+    obstacleTwo.render()
+    obstacleThree.render()
     detectHit()
     hero.render()
-  //  hero.newPos()
+  
 }
 
 document.addEventListener('keydown', movementHandler);
@@ -129,7 +149,7 @@ function detectHit() {
       hero.y + hero.height >= ogre.y
       ) {
         // do some game stuff!
-        console.log('GAME OVER')
+        console.log('Losing Game ')
         hero.x -= 5
         hero.y -= 5 
       }
@@ -141,15 +161,53 @@ function detectHit() {
         ) {
           hero.y += 5
           hero.x += 10
+     } if (
+      hero.x + hero.width >= obstacleTwo.x &&
+      hero.x <= obstacleTwo.x + obstacleTwo.width &&
+      hero.y <= obstacleTwo.y + obstacleTwo.height &&
+      hero.y + hero.height >= obstacleTwo.y 
+     ) {
+       hero.y += 10
+       hero.x += 5
+     } if (
+      hero.x + hero.width >= obstacleThree.x &&
+      hero.x <= obstacleThree.x + obstacleThree.width &&
+      hero.y <= obstacleThree.y + obstacleThree.height &&
+      hero.y + hero.height >= obstacleThree.y
+     ) {
+       hero.x += 10
+       hero.y += 10
      }
-    //  if (hero.x >= 100) {
-    //    hero.x += 6
-    //  } else if(hero.x >= 200) {    <--- gravity for hero
-    //    hero.x += 10
-    //  } else if(hero.x >= 300) {
-    //    hero.x += 15
-    //  } else if(hero.x >= 400) {
-    //    hero.x += 18
-    //  }
+     if (hero.x >= 100) {//       gravity
+       hero.x += 6
+     } else if(hero.x >= 200) {
+       hero.x += 8
+     } else if(hero.x >= 300) {
+       hero.x += 10
+     } else if(hero.x >= 400) {
+       hero.x += 12
+     }
   }
+  let showtimer = 120
+  let clock = setInterval(tick, 1000)
+  function tick() {
+        showtimer --
+        document.getElementById('timer').innerText = `Time: ${showtimer}`
+      if(showtimer === 0) {
+        //stopGame()
+        clearInterval(clock)
+        clearInterval(tick)
+      }
+    }
+// function stopGame() {
+// clearInterval(runGame)
+// document.removeEventListener('keydown', movementHandler)
+// }
+
+// function losingGame() {
+//   stopGame()
+//   document.querySelector('main').appendChild('h2')
+// }
+//function winGame()
+//stopGame()
 
