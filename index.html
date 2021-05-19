@@ -10,15 +10,17 @@
 
 </head>
 <body>
-    <div id="gameOver" class="gameMessage"></div>
-    <div id="gameStart" class="gameMessage"></div>
     <div id="container">
         <aside id="top-left"><h2>Escape Noface</h2></aside>
         <aside id="top-right"><h2 id="movement"></h2></aside>
-        <main>
+        <main><div id="gameStart" class="gameMessage"></div>
+        
+
             <canvas id="canvas"><!-- play it, a game --></canvas>
+        
+       
         </main>
-        <aside id="btm-left"><h2>Game Start</h2></aside>
+        <aside id="btm-left"><button class="button">Start Game</button></aside>
         <aside id="btm-right"><h2 id="timer">timer</h2></aside>
       </div>
 <script src="scripts/app.js"></script>    

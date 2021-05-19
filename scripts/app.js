@@ -27,7 +27,7 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
         ctx.fillRect(this.x, this.y, this.width, this.height)
       }
   }
-
+  let runGame //= setInterval(gameLoop, 60);
   let hero = new Crawler(250, 190, 'hotpink', 40, 35);
   let ogre = new Crawler(680, 50, '#BADA55', 100, 300);
   let obstacle //= [ ]
@@ -93,14 +93,14 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
       obstacle = createRandomObstacle()
     }
     obstacle.x += 14
-    if(obstacle.x >= 650) {
+    if(obstacle.x >= 630) {
       obstacle = createRandomObstacle()
     }
     if(!obstacleTwo){ //!obstacle
       obstacleTwo = createRandomObstacle()
     }
     obstacleTwo.x += 12
-    if(obstacleTwo.x >= 640) {
+    if(obstacleTwo.x >= 630) {
       obstacleTwo = createRandomObstacle()
     }
     if(!obstacleThree){ //!obstacle
@@ -119,7 +119,7 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 }
 
 document.addEventListener('keydown', movementHandler);
-let runGame = setInterval(gameLoop, 60);
+
 
 function movementHandler(e) {
     // up (w:87): y-=1; left (a:65): x-=1; down (s:83): y+=1; right (d:68): x+=1
@@ -189,25 +189,49 @@ function detectHit() {
      }
   }
   let showtimer = 120
-  let clock = setInterval(tick, 1000)
+  let clock
   function tick() {
         showtimer --
         document.getElementById('timer').innerText = `Time: ${showtimer}`
       if(showtimer === 0) {
-        //stopGame()
-        clearInterval(clock)
-        clearInterval(tick)
+       // winGame()
+        stopGame()
       }
     }
-// function stopGame() {
-// clearInterval(runGame)
-// document.removeEventListener('keydown', movementHandler)
-// }
+let gameMessage = document.getElementById("gameStart")
+let instructions = document.createElement("body")
+instructions.innerHTML = "<p>Success!<br>you got Noface to eat the medicide from the river spirit!<br> but now he's projectile vomiting everywhere and hes coming for you!<br> 1. use either the arrow keys or 'w', 'a', 's', 'd' keys to get away <br> 2. avoid running into your fellow co-workers, they'll slow you down!<br> 3. avoid being pushed into Noface to win the game!<br> click 'Start Game' to begin</p>"
+gameMessage.appendChild(instructions); 
 
-// function losingGame() {
-//   stopGame()
-//   document.querySelector('main').appendChild('h2')
-// }
-//function winGame()
-//stopGame()
+function gameStart() { 
+  gameMessage.removeChild(instructions)
+  clock = setInterval(tick, 1000)
+  runGame = setInterval(gameLoop, 60);
+}
+function myPlayFunction() {
+  document.getElementById("top-left").style.animationPlayState = "running";
+  document.getElementById("top-right").style.animationPlayState = "running"; 
+  canvas.style.animationPlayState = "running"
+}
+  document.querySelector("button").addEventListener("click", () => {
+    gameStart(); 
+    myPlayFunction();
+  })
 
+function stopGame() {
+    clearInterval(runGame)
+    document.removeEventListener('keydown', movementHandler)
+    clearInterval(clock)
+    clearInterval(tick)
+    document.querySelector("button").removeEventListener("click", gameStart)
+}
+
+function losingGame() {
+    stopGame()
+ }
+
+//function winGame() {
+  //let winMessage = document.createElement("body")
+  //winMessage.innerHTML = "<h1>GAME WON!</h1><p>you've successfully escaped the bathhouse before Noface caught you! now go help Haku by returning Zenibas golden seal!</p>"
+  //gameMessage.appendChild()
+//}

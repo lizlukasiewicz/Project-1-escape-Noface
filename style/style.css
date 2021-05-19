@@ -7,16 +7,20 @@ html,body {
     padding-top: 1em;
     text-align: center;
     background-color: black;
-    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/background-2.png");
+    /* background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/background-2.png"); */
     background-size: cover;
     background-repeat: space;
   }
   
   h1, h2 {
-    font-family: 'Palanquin Dark', sans-serif;;
-    font-family: 'Palanquin Dark', sans-serif;;
+    font-family: 'Palanquin Dark', sans-serif;
     color: goldenrod;
     text-shadow: 3px 3px 4px #000000;
+  }
+  p {
+    font-family: 'Palanquin Dark', sans-serif;
+    color: black;
+    text-shadow: 4px 4px 5px white;
   }
   
   @keyframes ani {
@@ -27,6 +31,7 @@ html,body {
     background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/Wood02.png"); 
     background-repeat: repeat; 
     animation: ani 5s linear infinite;
+    animation-play-state: paused;
     background-color: #222;
     width: 100%;
     height: 100;
@@ -37,10 +42,10 @@ html,body {
   height: 70vh;
   background-color: rgb(111, 12, 32);
   margin: 0 auto;
-  padding: 1em;
+  padding: 10px;
   display: grid;
-  grid-gap: 1em;
-  grid-template-rows: .20fr .60fr .20fr;
+  grid-gap: 5px;
+  grid-template-rows: .10fr .80fr .10fr;
   grid-template-columns: .20fr .60fr .20fr;
   grid-template-areas: "top-left top-left top-right"
                         "game game game"
@@ -51,16 +56,22 @@ html,body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/top=-background.png");
   }
   
   #top-left {
     grid-area: top-left;
+    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/top=-background.png");
+    background-repeat: repeat;
+    animation: ani 5s linear infinite;
+    animation-play-state: paused;
   }
   
   #top-right {
     grid-area: top-right;
-  background-color: #222;
+    background-image: url("/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/top=-background.png");
+    background-repeat: repeat;
+    animation: ani 5s linear infinite;
+    animation-play-state: paused;
   }
   
   main {
@@ -78,20 +89,29 @@ html,body {
     background-color: #222;
     box-shadow: 0 0 2px 3px gold;
   }
-  /* .gameMessages{
+  .gameMessages{
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(39 39 32 0.3);
+    background-color:black;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  #gameStart {
-    display: flex;
-  }
-  #gameOver {
+  
+  /* #gameOver {
     display: none;
   } */
+  .button {
+    background-color: rgb(111, 12, 32);
+    font-family: 'Palanquin Dark', sans-serif;
+    font-size: 16pt;
+    color: black;
+    border-style: solid;
+    padding: 10px 25px;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 0 0 2px 3px goldenrod;
+  }
