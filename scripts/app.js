@@ -4,32 +4,39 @@ const movementDisplay = document.getElementById('movement')
 const canvas = document.getElementById('canvas')
 // Set your Context!
 const ctx = canvas.getContext('2d')
-//**let collision = false**
 
-//ctx.fillRect(10, 10, 100, 100);
-//ctx.strokeRect(10, 10, 100, 100);
+const chihiro = document.getElementById("chihiro-run")
+const noface = document.getElementById("noface-run")
 
 canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 //   const ctx = canvas.getContext('2d')
 
   class Crawler{
-    constructor(x, y, color, width, height, gravity) {
+    constructor(imgSrc, x, y, width, height) {
+        this.imgSrc = imgSrc
         this.x = x
         this.y = y
-        this.color = color
         this.width = width
         this.height = height
-        //this.alive = true
+        //this.frameX = 0
+        //this.moving = true
       }
-      render() {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+      render() {      
+        ctx.drawImage(this.imgSrc, this.x, this.y, this.width, this.height)
+        //ctx.drawImage(img, Sx, Sy, Swidth, Sheight, Dx, Dy, Dwidth, Dheight)          
+        //ctx.drawImage(sprite, column*frameWidth, row*frameHeight, frameWidth, frameHeight, 10(this.x), 30(this.y), frameWidth, frameHeight);
+        ctx.fill()
       }
   }
+  //class Sprite{
+  //constructor()  
+  //}
+//const ogreSprite = new Image();
+//ogreSprite.src = "img/noface-spritesheet.png";
   let runGame //= setInterval(gameLoop, 60);
-  let hero = new Crawler(250, 190, 'hotpink', 40, 35);
-  let ogre = new Crawler(680, 50, '#BADA55', 100, 300);
+  let hero = new Crawler(chihiro, 250, 190, 40, 35);
+  let ogre = new Crawler(noface, 680, 50, 100, 300);
   let obstacle //= [ ]
   let obstacleTwo
   let obstacleThree
@@ -69,14 +76,15 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
           hero.x += speed
         }
      }
+  
   function createRandomObstacle () {
     const randomY = Math.floor(Math.random()*360) + 1
     const randomHeight = Math.floor(Math.random() * 40) + 40     //console.log(randomY)
-    //Math.random() * (max - min) + min;
+    const radish = document.getElementById("radish")//Math.random() * (max - min) + min;
     //const randomX = Math.floor(Math.random() * (1500 - 1000) + 1000);
     //console.log(randomX)
    // for(i = 0; i < obstacle.length; i += 1) {
-     return new Crawler(0, randomY, 'red', 40, randomHeight);
+     return new Crawler(radish, 0, randomY, 40, randomHeight);
    // }
    //  if(obstacle.length < 4){
    //   obstacle.push(new obstacle(0, randomY, 'red', 40, 40))
@@ -86,6 +94,7 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
   function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)                //clears the canvas
+    //context.drawImage(sprite, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 10, 30, frameWidth, frameHeight)
     move()
     movementDisplay.textContent = `X: ${hero.x} Y: ${hero.y}`       //Display the X and Y coordinates of our hero
     ogre.render()
@@ -148,8 +157,7 @@ function detectHit() {
       hero.y <= ogre.y + ogre.height &&
       hero.y + hero.height >= ogre.y
       ) {
-        // do some game stuff!
-        console.log('Losing Game ')
+        losingGame()
         hero.x -= 5
         hero.y -= 5 
       }
@@ -194,13 +202,13 @@ function detectHit() {
         showtimer --
         document.getElementById('timer').innerText = `Time: ${showtimer}`
       if(showtimer === 0) {
-       // winGame()
         stopGame()
+        winGame()
       }
     }
 let gameMessage = document.getElementById("gameStart")
 let instructions = document.createElement("body")
-instructions.innerHTML = "<p>Success!<br>you got Noface to eat the medicide from the river spirit!<br> but now he's projectile vomiting everywhere and hes coming for you!<br> 1. use either the arrow keys or 'w', 'a', 's', 'd' keys to get away <br> 2. avoid running into your fellow co-workers, they'll slow you down!<br> 3. avoid being pushed into Noface to win the game!<br> click 'Start Game' to begin</p>"
+instructions.innerHTML = "<p>You are Chihiro, and Noface just ate the medicide from the river spirit.<br> But now, he's projectile vomiting everywhere and hes coming for you!<br> 1. Use EITHER the arrow keys OR the 'w', 'a', 's', 'd' keys to move Chihiro on the board <br> 2. AVOID running into your fellow co-workers, they'll slow you down!<br> 3. SURVIVE 2 minutes without being pushed into Noface to win the game!<br> click ↙️'Start Game'↙️ to begin</p>"
 gameMessage.appendChild(instructions); 
 
 function gameStart() { 
@@ -228,10 +236,24 @@ function stopGame() {
 
 function losingGame() {
     stopGame()
+    let loser = document.createElement("body")
+    //loser.body.style.backgroundImage = "url('/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/loser.png')";
+    loser.innerHTML = "<h1>Oh no!</h1> <p>You've been eaten by Noface! Have fun exploring that esophagus with the foreman.<br> click above to play again</p>"
+    gameMessage.appendChild(loser)
+    document.getElementById("top-left").style.animationPlayState = "paused";
+    document.getElementById("top-right").style.animationPlayState = "paused";
+    canvas.style.animationPlayState = "paused"
  }
 
-//function winGame() {
-  //let winMessage = document.createElement("body")
-  //winMessage.innerHTML = "<h1>GAME WON!</h1><p>you've successfully escaped the bathhouse before Noface caught you! now go help Haku by returning Zenibas golden seal!</p>"
-  //gameMessage.appendChild()
-//}
+function winGame() {
+  let winMessage = document.createElement("body")
+  //winMessage.body.style.backgroundImage = "url('/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/winGame.png')";
+  winMessage.innerHTML = "<h1>GAME WON!</h1><p>you've successfully escaped the bathhouse before Noface caught you! <br>now go return Zenibas golden seal!</p>"
+  gameMessage.appendChild(winMessage)
+  document.getElementById("top-left").style.animationPlayState = "paused";
+  document.getElementById("top-right").style.animationPlayState = "paused";
+  canvas.style.animationPlayState = "paused" 
+}
+//<input type="button" value="Hide text" onclick="document.getElementById('p1').style.visibility='hidden'">
+//<input type="button" value="Hide text" onclick="document.getElementById('p1').style.visibility='hidden'">
+//<input type="button" value="Show text" onclick="document.getElementById('p1').style.visibility='visible'">

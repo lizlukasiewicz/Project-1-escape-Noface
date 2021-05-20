@@ -8,6 +8,7 @@ Sucess! NoFace has eaten the medicine you got from the River Spirit, But now he'
 ## What tech stack you plan on using
 - HTML, CSS, JavaScript
 - Pixel it (https://giventofly.github.io/pixelit/)
+- https://www.codeandweb.com/free-sprite-sheet-packer
 - Canvas
 
 __Wireframes of your game__
