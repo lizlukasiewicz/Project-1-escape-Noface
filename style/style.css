@@ -7,7 +7,7 @@ html,body {
     padding-top: 1em;
     text-align: center;
     background-color: black;
-    background-image: url("img/background-3.png");
+    background-image: url("../img/final-background.png");
     background-size: cover;
     background-repeat: space;
   }
@@ -29,9 +29,9 @@ html,body {
     100%{background-position: 100vw 0;}
   }
   canvas {
-    background-image: url("img/Wood02.png"); 
+    background-image: url("../img/canvasWood.png"); 
     background-repeat: repeat; 
-    animation: ani 5s linear infinite;
+    animation: ani 4s linear infinite;
     animation-play-state: paused;
     background-color: #222;
     width: 100%;
@@ -61,17 +61,17 @@ html,body {
   
   #top-left {
     grid-area: top-left;
-    background-image: url("img/top=-background.png");
+    background-image: url("../img/topScrollBackground.png");
     background-repeat: repeat;
-    animation: ani 5s linear infinite forwards;
+    animation: ani 4s linear infinite forwards;
     animation-play-state: paused;
   }
   
   #top-right {
     grid-area: top-right;
-    background-image: url("img/top=-background.png");
+    background-image: url("../img/topScrollBackground.png");
     background-repeat: repeat;
-    animation: ani 5s linear infinite forwards;
+    animation: ani 4s linear infinite forwards;
     animation-play-state: paused;
   }
   
@@ -98,7 +98,7 @@ html,body {
   }
   
   .button {
-    background-color: rgb(111, 12, 32);
+    background-color:goldenrod;
     font-family: 'Palanquin Dark', sans-serif;
     font-size: 16pt;
     color: black;

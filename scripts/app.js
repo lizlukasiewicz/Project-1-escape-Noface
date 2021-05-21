@@ -31,26 +31,26 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
   }
 
   let runGame //= setInterval(gameLoop, 60);
-  let hero = new Crawler(chihiro, 250, 190, 40, 35);
-  let ogre = new Crawler(noface, 680, 50, 100, 300);
-  let obstacle //= [ ]
+  let hero = new Crawler(chihiro, 150, 190, 60, 70);
+  let ogre = new Crawler(noface, 630, 20, 150, 375);
+  let obstacle 
   let obstacleTwo
   let obstacleThree
   
   function createRandomObstacle () {
     const randomY = Math.floor(Math.random()*360) + 1
     const radish = document.getElementById("radish")
-     return new Crawler(radish, 0, randomY, 40, 75);
+     return new Crawler(radish, 0, randomY, 50, 75);
     }
   function createRandomObstacleTwo () {
     const randomY = Math.floor(Math.random()*360) + 1
     const foreman = document.getElementById("foreman")
-     return new Crawler(foreman, 0, randomY, 40, 65);
+     return new Crawler(foreman, 0, randomY, 50, 65);
     }
   function createRandomObstacleThree () {
     const randomY = Math.floor(Math.random()*360) + 1
     const lady = document.getElementById("lady")
-     return new Crawler(lady, 0, randomY, 40, 70);
+     return new Crawler(lady, 0, randomY, 65, 80);
   }
   var Keys = {
       up: false,
@@ -93,27 +93,27 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
     ctx.clearRect(0, 0, canvas.width, canvas.height)                //clears the canvas
     //context.drawImage(sprite, column * frameWidth, row * frameHeight, frameWidth, frameHeight, 10, 30, frameWidth, frameHeight)
     move()
-    movementDisplay.textContent = `X: ${hero.x} Y: ${hero.y}`       //Display the X and Y coordinates of our hero
+    movementDisplay.innerHTML = "<form><button id='clear' type='submit'>New Game?</button></form>"       //Display the X and Y coordinates of our hero
     ogre.render()
     if(!obstacle){ //!obstacle
       obstacle = createRandomObstacle()
     }
     obstacle.x += 14
-    if(obstacle.x >= 630) {
+    if(obstacle.x >= 610) {
       obstacle = createRandomObstacle()
     }
     if(!obstacleTwo){ //!obstacle
       obstacleTwo = createRandomObstacleTwo()
     }
     obstacleTwo.x += 12
-    if(obstacleTwo.x >= 630) {
+    if(obstacleTwo.x >= 610) {
       obstacleTwo = createRandomObstacleTwo()
     }
     if(!obstacleThree){ //!obstacle
       obstacleThree = createRandomObstacleThree()
     }
-    obstacleThree.x += 16
-    if(obstacleThree.x >= 630) {
+    obstacleThree.x += 18
+    if(obstacleThree.x >= 610) {
       obstacleThree = createRandomObstacleThree()
     }
     obstacle.render()
@@ -234,7 +234,6 @@ function stopGame() {
 function losingGame() {
     stopGame()
     let loser = document.createElement("body")
-    //loser.body.style.backgroundImage = "url('/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/loser.png')";
     loser.innerHTML = "<h1>Oh no!</h1> <p>You've been eaten by Noface! Have fun exploring that esophagus with the foreman.<br> click above to play again</p>"
     gameMessage.appendChild(loser)
     document.getElementById("top-left").style.animationPlayState = "paused";
@@ -244,14 +243,139 @@ function losingGame() {
 
 function winGame() {
   let winMessage = document.createElement("body")
-  //winMessage.body.style.backgroundImage = "url('/Users/admin/Desktop/general-assembly/unit-1/Project-1-escape-Noface/img/winGame.png')";
   winMessage.innerHTML = "<h1>GAME WON!</h1><p>you've successfully escaped the bathhouse before Noface caught you! <br>now go return Zenibas golden seal!</p>"
   gameMessage.appendChild(winMessage)
   document.getElementById("top-left").style.animationPlayState = "paused";
   document.getElementById("top-right").style.animationPlayState = "paused";
   canvas.style.animationPlayState = "paused" 
 }
+//~~~~~SPRITESHEET PIPE DREAM SRC/NOTES~~~~~~ animation::
+// let img = new Image();
+// img.src = '';
+// img.onload = function() {
+//   init();
+// };
+// let canvas = document.querySelector('canvas');
+// let ctx = canvas.getContext('2d');
+// const scale = 5;
+// const width = 16;
+// const height = 18;
+// const scaledWidth = scale * width;
+// const scaledHeight = scale * height;
+// function drawFrame(frameX, frameY, canvasX, canvasY) {
+//   ctx.drawImage(img,
+//                 frameX * width, frameY * height, width, height,
+//                 canvasX, canvasY, scaledWidth, scaledHeight);
+// }
+// const cycleLoop = [0, 1, 0, 2];
+// let currentLoopIndex = 0;
+// let frameCount = 0;
+// function step() {
+//   frameCount++;
+//   if (frameCount < 15) {
+//     window.requestAnimationFrame(step);
+//     return;
+//   }
+//   frameCount = 0;
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   drawFrame(cycleLoop[currentLoopIndex], 0, 0, 0);
+//   currentLoopIndex++;
+//   if (currentLoopIndex >= cycleLoop.length) {
+//     currentLoopIndex = 0;
+//   }
+//   window.requestAnimationFrame(step);
+// }
+// function init() {
+//   window.requestAnimationFrame(step);
+// }
+//~~~~~~~~~~~~MOVEMENT~~~~~~~~~~~~~~~~~
+// const FACING_DOWN = 0;
+// const FACING_UP = 1;
+// const FACING_LEFT = 2;
+// const FACING_RIGHT = 3;
+// const FRAME_LIMIT = 12;
+// const MOVEMENT_SPEED = 1;
 
-//<input type="button" value="Hide text" onclick="document.getElementById('p1').style.visibility='hidden'">
-//<input type="button" value="Hide text" onclick="document.getElementById('p1').style.visibility='hidden'">
-//<input type="button" value="Show text" onclick="document.getElementById('p1').style.visibility='visible'">
+// let canvas = document.querySelector('canvas');
+// let ctx = canvas.getContext('2d');
+// let keyPresses = {};
+// let currentDirection = FACING_DOWN;
+// let currentLoopIndex = 0;
+// let frameCount = 0;
+// let positionX = 0;
+// let positionY = 0;
+// let img = new Image();
+
+// window.addEventListener('keydown', keyDownListener);
+// function keyDownListener(event) {
+//     keyPresses[event.key] = true;
+// }
+
+// window.addEventListener('keyup', keyUpListener);
+// function keyUpListener(event) {
+//     keyPresses[event.key] = false;
+// }
+
+// function loadImage() {
+//   img.src = 'https://opengameart.org/sites/default/files/Green-Cap-Character-16x18.png';
+//   img.onload = function() {
+//     window.requestAnimationFrame(gameLoop);
+//   };
+//   function drawFrame(frameX, frameY, canvasX, canvasY) {
+//     ctx.drawImage(img,
+//                   frameX * WIDTH, frameY * HEIGHT, WIDTH, HEIGHT,
+//                   canvasX, canvasY, SCALED_WIDTH, SCALED_HEIGHT);
+//   }
+  
+//   loadImage();
+  
+//   function gameLoop() {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+//     let hasMoved = false;
+  
+//     if (keyPresses.w) {
+//       moveCharacter(0, -MOVEMENT_SPEED, FACING_UP);
+//       hasMoved = true;
+//     } else if (keyPresses.s) {
+//       moveCharacter(0, MOVEMENT_SPEED, FACING_DOWN);
+//       hasMoved = true;
+//     }
+  
+//     if (keyPresses.a) {
+//       moveCharacter(-MOVEMENT_SPEED, 0, FACING_LEFT);
+//       hasMoved = true;
+//     } else if (keyPresses.d) {
+//       moveCharacter(MOVEMENT_SPEED, 0, FACING_RIGHT);
+//       hasMoved = true;
+//     }
+  
+//     if (hasMoved) {
+//       frameCount++;
+//       if (frameCount >= FRAME_LIMIT) {
+//         frameCount = 0;
+//         currentLoopIndex++;
+//         if (currentLoopIndex >= CYCLE_LOOP.length) {
+//           currentLoopIndex = 0;
+//         }
+//       }
+//     }
+    
+//     if (!hasMoved) {
+//       currentLoopIndex = 0;
+//     }
+  
+//     drawFrame(CYCLE_LOOP[currentLoopIndex], currentDirection, positionX, positionY);
+//     window.requestAnimationFrame(gameLoop);
+//   }
+  
+//   function moveCharacter(deltaX, deltaY, direction) {
+//     if (positionX + deltaX > 0 && positionX + SCALED_WIDTH + deltaX < canvas.width) {
+//       positionX += deltaX;
+//     }
+//     if (positionY + deltaY > 0 && positionY + SCALED_HEIGHT + deltaY < canvas.height) {
+//       positionY += deltaY;
+//     }
+//     currentDirection = direction;
+//   }
+//web source: https://dev.to/martyhimmel/moving-a-sprite-sheet-character-with-javascript-3adg
