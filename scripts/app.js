@@ -29,18 +29,29 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
         ctx.fill()
       }
   }
-  //class Sprite{
-  //constructor()  
-  //}
-//const ogreSprite = new Image();
-//ogreSprite.src = "img/noface-spritesheet.png";
+
   let runGame //= setInterval(gameLoop, 60);
   let hero = new Crawler(chihiro, 250, 190, 40, 35);
   let ogre = new Crawler(noface, 680, 50, 100, 300);
   let obstacle //= [ ]
   let obstacleTwo
   let obstacleThree
-
+  
+  function createRandomObstacle () {
+    const randomY = Math.floor(Math.random()*360) + 1
+    const radish = document.getElementById("radish")
+     return new Crawler(radish, 0, randomY, 40, 75);
+    }
+  function createRandomObstacleTwo () {
+    const randomY = Math.floor(Math.random()*360) + 1
+    const foreman = document.getElementById("foreman")
+     return new Crawler(foreman, 0, randomY, 40, 65);
+    }
+  function createRandomObstacleThree () {
+    const randomY = Math.floor(Math.random()*360) + 1
+    const lady = document.getElementById("lady")
+     return new Crawler(lady, 0, randomY, 40, 70);
+  }
   var Keys = {
       up: false,
       down: false,
@@ -76,20 +87,6 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
           hero.x += speed
         }
      }
-  
-  function createRandomObstacle () {
-    const randomY = Math.floor(Math.random()*360) + 1
-    const randomHeight = Math.floor(Math.random() * 40) + 40     //console.log(randomY)
-    const radish = document.getElementById("radish")//Math.random() * (max - min) + min;
-    //const randomX = Math.floor(Math.random() * (1500 - 1000) + 1000);
-    //console.log(randomX)
-   // for(i = 0; i < obstacle.length; i += 1) {
-     return new Crawler(radish, 0, randomY, 40, randomHeight);
-   // }
-   //  if(obstacle.length < 4){
-   //   obstacle.push(new obstacle(0, randomY, 'red', 40, 40))
-   //  }
-    }
  
 
   function gameLoop() {
@@ -106,18 +103,18 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
       obstacle = createRandomObstacle()
     }
     if(!obstacleTwo){ //!obstacle
-      obstacleTwo = createRandomObstacle()
+      obstacleTwo = createRandomObstacleTwo()
     }
     obstacleTwo.x += 12
     if(obstacleTwo.x >= 630) {
-      obstacleTwo = createRandomObstacle()
+      obstacleTwo = createRandomObstacleTwo()
     }
     if(!obstacleThree){ //!obstacle
-      obstacleThree = createRandomObstacle()
+      obstacleThree = createRandomObstacleThree()
     }
     obstacleThree.x += 16
     if(obstacleThree.x >= 630) {
-      obstacleThree = createRandomObstacle()
+      obstacleThree = createRandomObstacleThree()
     }
     obstacle.render()
     obstacleTwo.render()
@@ -254,6 +251,7 @@ function winGame() {
   document.getElementById("top-right").style.animationPlayState = "paused";
   canvas.style.animationPlayState = "paused" 
 }
+
 //<input type="button" value="Hide text" onclick="document.getElementById('p1').style.visibility='hidden'">
 //<input type="button" value="Hide text" onclick="document.getElementById('p1').style.visibility='hidden'">
 //<input type="button" value="Show text" onclick="document.getElementById('p1').style.visibility='visible'">
