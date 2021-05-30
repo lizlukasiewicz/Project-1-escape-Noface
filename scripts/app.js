@@ -32,7 +32,7 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
   let runGame //= setInterval(gameLoop, 60);
   let hero = new Crawler(chihiro, 150, 190, 60, 70);
-  let ogre = new Crawler(noface, 630, 20, 150, 375);
+  let ogre = new Crawler(noface, 640, 9, 170, 385);
   let obstacle 
   let obstacleTwo
   let obstacleThree
@@ -40,17 +40,17 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
   function createRandomObstacle () {
     const randomY = Math.floor(Math.random()*360) + 1
     const radish = document.getElementById("radish")
-     return new Crawler(radish, 0, randomY, 50, 75);
+     return new Crawler(radish, 0, randomY, 170, 135);
     }
   function createRandomObstacleTwo () {
     const randomY = Math.floor(Math.random()*360) + 1
     const foreman = document.getElementById("foreman")
-     return new Crawler(foreman, 0, randomY, 50, 65);
+     return new Crawler(foreman, 0, randomY, 60, 75);
     }
   function createRandomObstacleThree () {
     const randomY = Math.floor(Math.random()*360) + 1
     const lady = document.getElementById("lady")
-     return new Crawler(lady, 0, randomY, 65, 80);
+     return new Crawler(lady, 0, randomY, 95, 100);
   }
   var Keys = {
       up: false,
@@ -98,22 +98,22 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
     if(!obstacle){ //!obstacle
       obstacle = createRandomObstacle()
     }
-    obstacle.x += 14
-    if(obstacle.x >= 610) {
+    obstacle.x += 12
+    if(obstacle.x >= 620) {
       obstacle = createRandomObstacle()
     }
     if(!obstacleTwo){ //!obstacle
       obstacleTwo = createRandomObstacleTwo()
     }
-    obstacleTwo.x += 12
-    if(obstacleTwo.x >= 610) {
+    obstacleTwo.x += 16
+    if(obstacleTwo.x >= 620) {
       obstacleTwo = createRandomObstacleTwo()
     }
     if(!obstacleThree){ //!obstacle
       obstacleThree = createRandomObstacleThree()
     }
     obstacleThree.x += 18
-    if(obstacleThree.x >= 610) {
+    if(obstacleThree.x >= 620) {
       obstacleThree = createRandomObstacleThree()
     }
     obstacle.render()
